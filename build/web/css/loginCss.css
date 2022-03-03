@@ -3,9 +3,19 @@
     height: 50px;
     background-color: rgb(44 44 44);
     display: flex;
-    top: 0;
+    top:0px;
     justify-content: end;
     align-content: center;
+}
+.feature-h2{
+    font-size: 200%;
+    text-align: center;
+    font-weight: 600;
+}
+.feature-p{  
+    text-align: start;
+    margin:auto 5%;
+    font-size: 100%;
 }
 .item-right{
     margin: auto 16px;
@@ -24,9 +34,14 @@
     color: rgb(0, 0, 0);
 }
 
-body{
-    background-image: url(https://www.1life.co.za/globalassets/blog/new-blog-images/money-management.jpg);
+.body-login{
+    
+    background-color: #629ca6;
     background-size: cover;
+    background-position: center;
+}
+.body-home{
+    background-color: #629ca6;
 }
 .form-container{
     display: none;
@@ -61,3 +76,34 @@ body{
    
     color: rgb(255, 0, 43);
 }
+.feature-layout{
+    height: 30%;
+    margin-top: 2%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    
+  
+}
+.feature-item{
+   
+    flex-basis: 30%;
+    
+}
+.first-item{
+    background-color: #83dfdf;
+}
+.second-item{
+    background-color: #e3b5cc;
+}
+.third-item{
+    background-color: #e3866b;
+}
+#slogan{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    margin: auto ;
+    background-color: bisque;
+}
+

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.auth;
 
 import dal.AccountDBContext;
 import java.io.IOException;
@@ -62,11 +62,11 @@ public class LoginController extends HttpServlet {
         AccountDBContext db = new AccountDBContext();
         Account account = db.getAccount(username, password);
         if(account == null){
-            request.setAttribute("loginFailed", "Username or password is wrong! Please check!");
+            request.setAttribute("loginFailed", "Bạn nhập sai tài khoản hoặc mật khẩu! Xin hãy thử lại");
             request.getRequestDispatcher("view/auth/login.jsp").forward(request, response);
         }else{
             request.getSession().setAttribute("account", account);
-            request.getRequestDispatcher("view/deptManagement/list.jsp").forward(request, response);
+            response.sendRedirect("dept/home");
         }
        
     }
