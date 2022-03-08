@@ -6,6 +6,7 @@
 package controller.dept;
 
 import controller.auth.BaseAuthController;
+import dal.AddressDBContext;
 import dal.CustomersOweDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
+import model.Address;
 import model.CustomersOwe;
 
 /**
@@ -34,8 +36,18 @@ public class HomeController extends BaseAuthController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CustomersOweDBContext db = new CustomersOweDBContext();
-        ArrayList<CustomersOwe> allCustomersOwe = db.getAllCustomersOwe();
+         int addressid = -1;
+        AddressDBContext adDb = new AddressDBContext();
+        ArrayList<Address> allAddress = adDb.getAllAddress();
+        String addressID_raw = request.getParameter("addressid");
+        if(addressID_raw == null || addressID_raw.trim().length() == 0){
+            addressID_raw = "-1";
+        } 
+        else addressid = Integer.parseInt(addressID_raw);
+         CustomersOweDBContext db = new CustomersOweDBContext();
+        ArrayList<CustomersOwe> allCustomersOwe = db.getCustomersOwe(addressid);
+        request.setAttribute("addressid", addressid);
+        request.setAttribute("allAddress", allAddress);
         request.setAttribute("allCustomersOwe",allCustomersOwe);
          request.getRequestDispatcher("../view/deptManagement/home.jsp").forward(request, response);
     }

@@ -5,3 +5,6 @@ function login(){
 function logout(){
     window.location.href = "../logout";
 }
+  function submitForm() {
+             document.getElementById("searchForm").submit();
+            }

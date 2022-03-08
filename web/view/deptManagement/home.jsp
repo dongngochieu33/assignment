@@ -12,44 +12,60 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-         <link href="../css/loginCss.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/loginCss.css" rel="stylesheet" type="text/css"/>
         <script src="../js/main.js" type="text/javascript"></script>
+<!--        <script>
+             function submitForm() {
+             document.getElementById("searchForm").submit();
+            }
+        </script>-->
+        
     </head>
     <body class="body-home">
-         <div class="contain-flex">      
+        <div class="contain-flex">      
             <div class="item-right">
                 <a class="item-flex" href="#" onclick="logout()">Log out</a>      
             </div>
         </div>
-        <div>
-            <table border="1">
+        <div class="h1-container"><h1 class="h1-content">Danh sách khách hàng nợ tiền</h1></div>
+        <div class="table-owe">
+            <table border="1" >
                 <div>
                     <tr>
-                        <td>Họ</td>
-                        <td>Tên</td>
-                        <td>Xóm</td>
-                        <td>Nợ</td>
-                        <td></td>
-                        <td></td>
+                        <th>Họ</th>
+                        <th>Tên</th>
+                        <th>Xóm &nbsp
+                            <form action="home" method="POST" id="searchForm">
+                                <select name="addressid"  onchange="submitForm();">
+                                    <option value="-1">Tất cả</option>
+                                    <c:forEach items="${requestScope.allAddress}" var="ad">
+                                        <option value="${ad.id}" ${(requestScope.addressid == ad.id)?"selected":""}  >${ad.xom}</option>
+                                    </c:forEach>
+                                </select>
+                            </form>
+                        </th>
+                        <th>Nợ</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </div>
                 <c:forEach items="${requestScope.allCustomersOwe}" var="aco">
                     <div>
-                    <tr>
-                        <td>${aco.cus.firstName}</td>
-                        <td>${aco.cus.lastName}</td>
-                        <td>${aco.add.xom}</td>
-                        <td>${aco.ownMoney * 1000} VND</td>
-                        <td><a href="customer/detail">Chi Tiết</a></td>
-                        <td><a href="#">Xóa</a></td>
-                    </tr>
-                </div>              
+                        <tr>
+                            <td>${aco.cus.firstName}</td>
+                            <td>${aco.cus.lastName}</td>
+                            <td>${aco.add.xom}</td>
+                            <td>${aco.ownMoney * 1000} VND</td>
+                            <td><a href="customer/detail">Chi Tiết</a></td>
+                            <td><a href="#">Xóa</a></td>
+                        </tr>
+                    </div>              
                 </c:forEach>
-                
-                
+
+
             </table>
-            
-            
+
+
         </div>
     </body>
 </html>

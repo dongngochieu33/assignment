@@ -22,7 +22,7 @@ import model.SaleHistory;
  */
 public class CustomersOweDBContext extends DBContext {
 
-    public ArrayList<CustomersOwe> getAllCustomersOwe() {
+    public ArrayList<CustomersOwe> getCustomersOwe(int addressId) {
         ArrayList<CustomersOwe> owns = new ArrayList<>();
         try {
 
@@ -33,10 +33,17 @@ public class CustomersOweDBContext extends DBContext {
                     + "ON Address.id = Customer.addressId\n"
                     + "GROUP BY SaleHistory.id,customerId,firstName,lastName,date,Xom,Address.id) AS A WHERE TienNo > 0\n"
                     + ")\n"
-                    + "SELECT a.customerId,a.firstName,a.lastName,sum(a.TienNo) AS 'tongno',id,a.Xom FROM a\n"
-                    + "GROUP BY a.customerId,a.firstName,a.lastName,a.Xom,a.id\n"
+                    + "SELECT a.customerId,a.firstName,a.lastName,sum(a.TienNo) AS 'tongno',id,a.Xom FROM a";
+
+            if (addressId != -1) {
+                sql += " WHERE id = ?";
+            }
+            sql += " GROUP BY a.customerId,a.firstName,a.lastName,a.Xom,a.id\n"
                     + "ORDER BY xom,a.lastName,a.firstName";
             PreparedStatement stm = connection.prepareStatement(sql);
+            if(addressId != -1){
+                stm.setInt(1, addressId);
+            }
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 CustomersOwe co = new CustomersOwe();
