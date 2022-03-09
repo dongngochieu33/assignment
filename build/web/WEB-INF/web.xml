@@ -13,8 +13,12 @@
         <servlet-class>controller.auth.LogoutController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CustomerDetailOweController</servlet-name>
-        <servlet-class>controller.dept.CustomerDetailOweController</servlet-class>
+        <servlet-name>CompanyController</servlet-name>
+        <servlet-class>controller.dept.CompanyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InfoCustomerController</servlet-name>
+        <servlet-class>controller.info.InfoCustomerController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -29,8 +33,12 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CustomerDetailOweController</servlet-name>
-        <url-pattern>/dept/customer/detail</url-pattern>
+        <servlet-name>CompanyController</servlet-name>
+        <url-pattern>/dept/company</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InfoCustomerController</servlet-name>
+        <url-pattern>/info/customer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

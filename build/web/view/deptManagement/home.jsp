@@ -14,11 +14,7 @@
         <title>JSP Page</title>
         <link href="../css/loginCss.css" rel="stylesheet" type="text/css"/>
         <script src="../js/main.js" type="text/javascript"></script>
-<!--        <script>
-             function submitForm() {
-             document.getElementById("searchForm").submit();
-            }
-        </script>-->
+
         
     </head>
     <body class="body-home">
@@ -56,16 +52,32 @@
                             <td>${aco.cus.lastName}</td>
                             <td>${aco.add.xom}</td>
                             <td>${aco.ownMoney * 1000} VND</td>
-                            <td><a href="customer/detail">Chi Tiết</a></td>
-                            <td><a href="#">Xóa</a></td>
+                                    <td>
+                                        <form action="../info/customer" method="POST">
+                                            <input type="hidden" name="cusId" value="${aco.cus.cid}"/>
+                                            <input type="submit" value="Chi Tiết" class="buttonHome"/>
+                                </form>
+                                    </td>
+                          
+                           <td>
+                                        <form action="#" method="POST">
+                                            <input type="submit" value="Xóa" class="buttonHome"/>
+                                </form>
+                                    </td>
                         </tr>
                     </div>              
                 </c:forEach>
 
-
+                <tr>
+                    <td colspan="6"><div id="pagger"> </div></td>
+                </tr>
             </table>
 
 
         </div>
+       
+        <script> 
+            paggerHome('pagger',${requestScope.pageindex},${requestScope.totalpage},${requestScope.addressid});
+        </script>
     </body>
 </html>

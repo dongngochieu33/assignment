@@ -16,15 +16,16 @@ public class SaleHistory {
     private int shId;
     private Customer cus;
     private float paid;
-
+    private float total;
     public SaleHistory() {
     }
 
-    public SaleHistory(Date date, int shId, Customer cus, float paid) {
+    public SaleHistory(Date date, int shId, Customer cus, float paid, float total) {
         this.date = date;
         this.shId = shId;
         this.cus = cus;
         this.paid = paid;
+        this.total = total;
     }
 
     public Date getDate() {
@@ -58,5 +59,14 @@ public class SaleHistory {
     public void setPaid(float paid) {
         this.paid = paid;
     }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
     
 }

@@ -3,20 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.dept;
+package controller.info;
 
+import dal.CustomersOweDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.CustomerOwe;
 
 /**
  *
  * @author ADMIN
  */
-public class CustomerDetailOweController extends HttpServlet {
+public class InfoCustomerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,19 +33,30 @@ public class CustomerDetailOweController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CustomerDetailOweController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CustomerDetailOweController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    String page = request.getParameter("page");
+        if(page ==null || page.trim().length() ==0)
+        {
+            page = "1";
         }
+        int pageindex = Integer.parseInt(page);
+         int id = Integer.parseInt(request.getParameter("cusId"));
+        CustomersOweDBContext db = new CustomersOweDBContext();
+         int pagesize = 10;
+         int records = db.getTotalPageOfOneCustomerOwe(id);
+        int totalpage = (records % pagesize ==0)?(records/pagesize):(records/pagesize) + 1;
+        Date fromDate = null;
+       String date_raw =(String) request.getParameter("fromDate");
+       if(date_raw!= null && date_raw.trim().length() != 0){
+           fromDate = Date.valueOf(date_raw);
+       }
+        ArrayList<CustomerOwe> oneCustomerOwe = db.getOneCustomerOwe(id, pageindex, pagesize,fromDate);
+        request.setAttribute("cusId", id);
+        request.setAttribute("fromDate", fromDate);
+        request.setAttribute("totalpage", totalpage);
+        request.setAttribute("pageindex", pageindex);
+        request.setAttribute("oneCustomerOwe", oneCustomerOwe);
+        request.getRequestDispatcher("../view/deptManagement/customer/totalOwe.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,7 +71,7 @@ public class CustomerDetailOweController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         processRequest(request, response);
     }
 
     /**
