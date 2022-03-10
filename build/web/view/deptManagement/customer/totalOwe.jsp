@@ -70,9 +70,8 @@
                                 </td>
 
                                 <td>
-                                    <form action="#" method="POST">
-                                        <input type="submit" value="Xóa" class="buttonHome"/>
-                                    </form>
+                                    <button onclick="deleteOrder('../pay/oneorder',${aco.saleHistory.shId},${aco.saleHistory.total},${requestScope.cusId})" class="buttonHome">Xoa</button>
+                                    
                                 </td>
                             </tr>
                         </div>            

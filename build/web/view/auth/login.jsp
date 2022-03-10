@@ -17,7 +17,7 @@
     </head>
     <body class="body-login">
 
-        <div class="contain-flex">      
+        <div class="contain-flex-home">      
             <div class="item-right">
                 <a class="item-flex" href="#" onclick="login()">Đăng nhập</a>      
             </div>

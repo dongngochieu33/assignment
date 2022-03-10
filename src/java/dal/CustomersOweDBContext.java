@@ -178,7 +178,7 @@ public class CustomersOweDBContext extends DBContext {
 
             stm.setInt(1, cusId);
             if (date != null) {
-                 stm.setDate(2, date);
+                stm.setDate(2, date);
             }
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
@@ -242,5 +242,39 @@ public class CustomersOweDBContext extends DBContext {
             Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return saleDetail;
+    }
+
+   
+    public void payOrder(int shId, float tienPhaiTra) {
+        String sql = "UPDATE [SaleHistory]\n"
+                + "   SET \n"
+                + "      [paid] = ?\n"
+                + "      \n"
+                + " WHERE id = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setFloat(1, tienPhaiTra);
+            stm.setInt(2, shId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
     }
 }

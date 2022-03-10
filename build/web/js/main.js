@@ -62,3 +62,9 @@ function logout(){
       }
     });
 }
+function deleteOrder(url,shId,tienPhaiTra,cusId){
+    var result = confirm("Bạn muốn xóa đơn hàng này khỏi danh sách nợ?");
+     if(result){
+                    window.location.href = url +"?shId="+shId+"&tienPhaiTra="+tienPhaiTra+"&cusId="+cusId;
+                }
+}

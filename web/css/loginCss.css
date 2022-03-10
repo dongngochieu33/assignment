@@ -7,6 +7,15 @@
     justify-content: space-between;
     align-content: center;
 }
+.contain-flex-home{
+  width: 100%;
+    height: 50px;
+    background-color: rgb(44 44 44);
+    display: flex;
+    top:0px;
+    justify-content: flex-end;
+    align-content: center;  
+}
 .h1-container{
    display: flex;
    justify-content: center;
