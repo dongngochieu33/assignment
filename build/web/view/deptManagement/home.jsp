@@ -18,7 +18,10 @@
         
     </head>
     <body class="body-home">
-        <div class="contain-flex">      
+         <div class="contain-flex"> 
+            <div class="item-right">
+                <a class="item-flex" href="../dept/home" ">Home</a>      
+            </div>
             <div class="item-right">
                 <a class="item-flex" href="#" onclick="logout()">Log out</a>      
             </div>
@@ -51,10 +54,15 @@
                             <td>${aco.cus.firstName}</td>
                             <td>${aco.cus.lastName}</td>
                             <td>${aco.add.xom}</td>
-                            <td>${aco.ownMoney * 1000} VND</td>
+                            <td>
+                                
+                                 ${(aco.ownMoney)}k VND
+
+                               </td>
                                     <td>
                                         <form action="../info/customer" method="POST">
                                             <input type="hidden" name="cusId" value="${aco.cus.cid}"/>
+                                            <input type="hidden" name="cusName" value="${aco.cus.firstName} ${aco.cus.lastName}"/>
                                             <input type="submit" value="Chi Tiết" class="buttonHome"/>
                                 </form>
                                     </td>

@@ -44,7 +44,7 @@ public class CustomersOweDBContext extends DBContext {
             }
             sql += " GROUP BY a.customerId,a.firstName,a.lastName,a.Xom,a.id\n"
                     + ") dum WHERE dum.row_index > (?-1)*? AND dum.row_index <= ?*?\n"
-                    + "ORDER BY lastName,firstName";
+                    + "ORDER BY tongno DESC, lastName,firstName ASC";
             PreparedStatement stm = connection.prepareStatement(sql);
             if (addressId != -1) {
                 stm.setInt(1, addressId);
@@ -119,22 +119,28 @@ public class CustomersOweDBContext extends DBContext {
                     + "ON SaleHistory.customerId = Customer.id\n"
                     + "JOIN dbo.SaleDetail ON SaleDetail.saleId = SaleHistory.id\n"
                     + "JOIN dbo.Product ON Product.id = SaleDetail.productId\n"
-                    + "WHERE Customer.id = ?\n"
-                    + "\n"
-                    + "GROUP BY SaleHistory.id,date,firstName,lastName,paid) a\n"
-                    + "WHERE a.row_number > (? - 1) * ? AND a.row_number <= ?*? AND a.Total-a.paid > 0";
-            if(date != null){
-                sql += " AND a.date >= ?";
+                    + "WHERE Customer.id = ?\n";
+
+            if (date != null) {
+                sql += " AND date >= ?";
             }
+            sql += " GROUP BY SaleHistory.id,date,firstName,lastName,paid HAVING SUM( price *quantity) - paid > 0) a\n"
+                    + "                    WHERE a.row_number > (? - 1) * ? AND a.row_number <= ?*? ";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, cusId);
-            stm.setInt(2, pageIndex);
-            stm.setInt(3, pagesize);
-            stm.setInt(4, pageIndex);
-            stm.setInt(5, pagesize);
-            if(date != null){
-                stm.setDate(6, date);
+            if (date != null) {
+                stm.setDate(2, date);
+                stm.setInt(3, pageIndex);
+                stm.setInt(4, pagesize);
+                stm.setInt(5, pageIndex);
+                stm.setInt(6, pagesize);
+            } else {
+                stm.setInt(2, pageIndex);
+                stm.setInt(3, pagesize);
+                stm.setInt(4, pageIndex);
+                stm.setInt(5, pagesize);
             }
+            stm.setInt(1, cusId);
+
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 CustomerOwe co = new CustomerOwe();
@@ -156,22 +162,24 @@ public class CustomersOweDBContext extends DBContext {
         return owns;
     }
 
-    public int getTotalPageOfOneCustomerOwe(int cusId) {
+    public int getTotalPageOfOneCustomerOwe(int cusId, Date date) {
         try {
             String sql = " SELECT COUNT(*) AS totalPage FROM  (SELECT ROW_NUMBER() OVER (ORDER BY SaleHistory.id) AS 'row_number', SaleHistory.id,date,firstName,lastName,SUM( price *quantity)AS 'Total', paid FROM dbo.Customer JOIN dbo.SaleHistory\n"
                     + "ON SaleHistory.customerId = Customer.id\n"
                     + "JOIN dbo.SaleDetail ON SaleDetail.saleId = SaleHistory.id\n"
                     + "JOIN dbo.Product ON Product.id = SaleDetail.productId\n"
-                    + "WHERE Customer.id = ? \n"
-                    + "\n"
-                    + "GROUP BY SaleHistory.id,date,firstName,lastName,paid) a";
-
-            
+                    + "WHERE Customer.id = ? \n";
+            if (date != null) {
+                sql += " AND date > ?";
+            }
+            sql += " GROUP BY SaleHistory.id,date,firstName,lastName,paid HAVING SUM( price *quantity) - paid > 0) a";
 
             PreparedStatement stm = connection.prepareStatement(sql);
-            
-                stm.setInt(1, cusId);
-           
+
+            stm.setInt(1, cusId);
+            if (date != null) {
+                 stm.setDate(2, date);
+            }
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -180,5 +188,59 @@ public class CustomersOweDBContext extends DBContext {
             Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
+    }
+
+    public int getTotalPageOfCustomerDetail(int saleHistoryId) {
+        try {
+            String sql = " SELECT COUNT(*) AS totalRow FROM (SELECT ROW_NUMBER() OVER(ORDER BY saleId) AS row, saleId,productName,description,price,quantity,discount FROM dbo.SaleDetail JOIN dbo.Product\n"
+                    + "ON Product.id = SaleDetail.productId\n"
+                    + "WHERE saleId = ?) a";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, saleHistoryId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    public ArrayList<SaleDetail> getSaleDetailById(int saleHistoryId, int pageindex, int pagesize) {
+        ArrayList<SaleDetail> saleDetail = new ArrayList<>();
+        try {
+
+            String sql = "SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY saleId) AS row, saleId,productName,description,price,quantity,discount FROM dbo.SaleDetail JOIN dbo.Product\n"
+                    + "ON Product.id = SaleDetail.productId\n"
+                    + "WHERE saleId = ?) a\n"
+                    + "WHERE a.row > (?-1)*? and  a.row <= ? * ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, saleHistoryId);
+            stm.setInt(2, pageindex);
+            stm.setInt(3, pagesize);
+            stm.setInt(4, pageindex);
+            stm.setInt(5, pagesize);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                SaleDetail s = new SaleDetail();
+                Product p = new Product();
+                SaleHistory sh = new SaleHistory();
+                sh.setShId(rs.getInt(2));
+                p.setName(rs.getString(3));
+                p.setDiscription(rs.getString(4));
+                p.setPrice(rs.getFloat(5));
+                s.setSaleHistory(sh);
+                s.setPro(p);
+                s.setQuantity(rs.getInt(6));
+                s.setDiscount(rs.getFloat(7));
+                saleDetail.add(s);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return saleDetail;
     }
 }

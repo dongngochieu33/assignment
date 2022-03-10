@@ -20,6 +20,10 @@
         <servlet-name>InfoCustomerController</servlet-name>
         <servlet-class>controller.info.InfoCustomerController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>InfoCustomerDetailController</servlet-name>
+        <servlet-class>controller.info.InfoCustomerDetailController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>InfoCustomerController</servlet-name>
         <url-pattern>/info/customer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InfoCustomerDetailController</servlet-name>
+        <url-pattern>/info/customer/detail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

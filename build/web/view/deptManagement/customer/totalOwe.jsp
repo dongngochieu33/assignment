@@ -16,7 +16,10 @@
         <script src="../js/main.js" type="text/javascript"></script>
     </head>
     <body class="body-home">
-        <div class="contain-flex">      
+        <div class="contain-flex"> 
+            <div class="item-right">
+                <a class="item-flex" href="../dept/home" ">Home</a>      
+            </div>
             <div class="item-right">
                 <a class="item-flex" href="#" onclick="logout()">Log out</a>      
             </div>
@@ -24,11 +27,12 @@
 
 
         <div class="h1-container">
-            <h1 class="h1-content">Danh sách đơn nợ tiền của khách hàng: ${requestScope.oneCustomerOwe.get(0).cus.firstName } ${requestScope.oneCustomerOwe.get(0).cus.lastName}</h1>
+            <h1 class="h1-content">Danh sách đơn nợ tiền của khách hàng: ${requestScope.cusName}</h1>
         </div>
         <div class="formDate">
-            <form class="formDate-content" method="POST">
+            <form action="customer" class="formDate-content" method="POST">
                 <input type="hidden" value="${requestScope.cusId}" name="cusId" />
+                 <input type="hidden" name="cusName" value="${requestScope.cusName}"/>
                 <input type="date" name="fromDate" value="${requestScope.fromDate}"/>
                 <input type="submit" value="Ket Qua"/>
             </form>
@@ -59,7 +63,8 @@
                                 <td>${aco.saleHistory.total * 1000 - aco.saleHistory.paid * 1000} VND</td>
 
                                 <td>
-                                    <form action="../info/customer?cusId=${aco.cus.cid}" method="POST">
+                                    <form action="customer/detail" method="POST">
+                                        <input type="hidden" name="saleHistoryId" value="${aco.saleHistory.shId}"/>
                                         <input type="submit" value="Chi Tiết" class="buttonHome"/>
                                     </form>
                                 </td>
@@ -83,7 +88,7 @@
         </div>
 
         <script>
-            paggerTotalOwe('pagger',${requestScope.pageindex},${requestScope.totalpage},${requestScope.cus.cid});
+            paggerTotalOwe('pagger',${requestScope.pageindex},${requestScope.totalpage},${requestScope.cusId},'${requestScope.cusName}','${requestScope.fromDate}');
         </script>     
 
     </body>

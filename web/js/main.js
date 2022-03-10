@@ -12,7 +12,7 @@ function logout(){
 {
     container = document.getElementById(id);
     var result = '';
-    result += '<div id="pageBox"> Page:<input id="pageindex_input" type="text" value="'+pageindex+'"/> over '+totalpage + '</div>';
+    result += '<div id="pageBox"> Page:<input id="pageindex_input" type="number" value="'+pageindex+'"/> over '+totalpage + '</div>';
     container.innerHTML = result;
     
     // Get the input field
@@ -26,11 +26,11 @@ function logout(){
       }
     });
 }
- function paggerTotalOwe(id,pageindex,totalpage,cusId)
+ function paggerTotalOwe(id,pageindex,totalpage,cusId,cusName,fromDate)
 {
     container = document.getElementById(id);
     var result = '';
-    result += '<div id="pageBox"> Page:<input id="pageindex_input" type="text" value="'+pageindex+'"/> over '+totalpage + '</div>';
+    result += '<div id="pageBox"> Page:<input id="pageindex_input" type="number" value="'+pageindex+'"/> over '+totalpage + '</div>';
     container.innerHTML = result;
     
     // Get the input field
@@ -40,7 +40,25 @@ function logout(){
     input.addEventListener("keyup", function(event) {
       // Number 13 is the "Enter" key on the keyboard
       if (event.keyCode === 13) {
-            window.location.href = 'customer?page='+input.value +"&cusId="+cusId; 
+            window.location.href = 'customer?page='+input.value +"&cusId="+cusId +"&cusName="+cusName +"&fromDate="+fromDate; 
+      }
+    });
+}
+ function paggerSaleDetail(id,pageindex,totalpage,saleHistoryId)
+{
+    container = document.getElementById(id);
+    var result = '';
+    result += '<div id="pageBox"> Page:<input id="pageindex_input" type="number" value="'+pageindex+'"/> over '+totalpage + '</div>';
+    container.innerHTML = result;
+    
+    // Get the input field
+    var input = document.getElementById("pageindex_input");
+
+    // Execute a function when the user releases a key on the keyboard
+    input.addEventListener("keyup", function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+            window.location.href = 'detail?page='+input.value +"&saleHistoryId="+saleHistoryId; 
       }
     });
 }
