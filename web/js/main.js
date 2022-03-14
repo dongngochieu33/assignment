@@ -68,3 +68,17 @@ function deleteOrder(url,shId,tienPhaiTra,cusId){
                     window.location.href = url +"?shId="+shId+"&tienPhaiTra="+tienPhaiTra+"&cusId="+cusId;
                 }
 }
+function deleteAllOrder(id){
+    var result = confirm("Bạn muốn xóa khách hàng này khỏi danh sách nợ?");
+     if(result){
+                    document.getElementById(id).submit();
+                }
+}
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}

@@ -3,22 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.dept;
+package controller.pay;
 
-import dal.CompanyDBContext;
+import controller.auth.BaseAuthController;
+import dal.CustomersOweDBContext;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.CompanysOwe;
+import model.CustomerOwe;
 
 /**
  *
  * @author ADMIN
  */
-public class CompanyController extends HttpServlet {
+public class PayManyOrderController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,10 +33,12 @@ public class CompanyController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CompanyDBContext db = new CompanyDBContext();
-        ArrayList<CompanysOwe> allCompanyOwe = db.getAllCompanyOwe();
-        request.setAttribute("allCompanyOwe", allCompanyOwe);
-        request.getRequestDispatcher("../view/deptManagement/company.jsp").forward(request, response);
+        int id = Integer.parseInt(request.getParameter("cid")); 
+        CustomersOweDBContext db = new CustomersOweDBContext();
+        ArrayList<CustomerOwe> allCustomerOwe = db.getAllCustomerOwe(id);
+        db.deleteSaleHistory(allCustomerOwe);
+        response.sendRedirect("../dept/home");
+       //response.getWriter().print("done");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -47,7 +51,7 @@ public class CompanyController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -61,7 +65,7 @@ public class CompanyController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

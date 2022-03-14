@@ -244,7 +244,6 @@ public class CustomersOweDBContext extends DBContext {
         return saleDetail;
     }
 
-   
     public void payOrder(int shId, float tienPhaiTra) {
         String sql = "UPDATE [SaleHistory]\n"
                 + "   SET \n"
@@ -276,5 +275,98 @@ public class CustomersOweDBContext extends DBContext {
             }
         }
 
+    }
+
+    public ArrayList<CustomerOwe> getAllCustomerOwe(int id) {
+        ArrayList<CustomerOwe> owns = new ArrayList<>();
+        try {
+
+            String sql = "SELECT id,total FROM  (SELECT ROW_NUMBER() OVER (ORDER BY SaleHistory.id) AS 'row_number', SaleHistory.id,date,firstName,lastName,SUM( price *quantity)AS 'Total', paid FROM dbo.Customer JOIN dbo.SaleHistory\n"
+                    + "                    ON SaleHistory.customerId = Customer.id\n"
+                    + "                    JOIN dbo.SaleDetail ON SaleDetail.saleId = SaleHistory.id\n"
+                    + "                    JOIN dbo.Product ON Product.id = SaleDetail.productId\n"
+                    + "                    WHERE Customer.id = ?\n"
+                    + "					GROUP BY SaleHistory.id,date,firstName,lastName,paid HAVING SUM( price *quantity) - paid > 0) a";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                CustomerOwe co = new CustomerOwe();
+                SaleHistory saleh = new SaleHistory();
+                saleh.setShId(rs.getInt(1));
+                saleh.setTotal(rs.getFloat(2));
+                co.setSaleHistory(saleh);
+                owns.add(co);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return owns;
+    }
+
+    public void deleteSaleHistory(ArrayList<CustomerOwe> allCustomerOwe) {
+
+        String sql = "UPDATE [dbo].[SaleHistory]\n"
+                + "   SET  [paid] = ?\n"
+                + "     \n"
+                + " WHERE id = ?";
+        PreparedStatement stm = null;
+        try {
+
+            for (CustomerOwe customerOwe : allCustomerOwe) {
+                stm = connection.prepareStatement(sql);
+                stm.setFloat(1, customerOwe.getSaleHistory().getTotal());
+                stm.setInt(2, customerOwe.getSaleHistory().getShId());
+                stm.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public Customer getInfoOfCustomer(int id) {
+        try {
+
+            String sql = "select * from Customer c  join address a\n"
+                    + "on c.addressId = a.id\n"
+                    + "where c.id = ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Customer c = new Customer();
+                c.setCid(rs.getInt(1));
+                c.setFirstName(rs.getString(2));
+                c.setLastName(rs.getString(3));
+                c.setPhoneNumber(rs.getString(4));
+                Address a = new Address();
+                a.setId(rs.getInt(7));
+                a.setXom(rs.getString(8));
+                c.setGender(rs.getBoolean(6));
+                c.setAddress(a);
+                return c;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomersOweDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

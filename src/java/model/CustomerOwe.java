@@ -14,15 +14,16 @@ public class CustomerOwe {
     private SaleHistory saleHistory;
     private SaleDetail saleDetail;
     private Product pro;
-
+    private boolean pay;
     public CustomerOwe() {
     }
 
-    public CustomerOwe(Customer cus, SaleHistory saleHistory, SaleDetail saleDetail, Product pro) {
+    public CustomerOwe(Customer cus, SaleHistory saleHistory, SaleDetail saleDetail, Product pro, boolean pay) {
         this.cus = cus;
         this.saleHistory = saleHistory;
         this.saleDetail = saleDetail;
         this.pro = pro;
+        this.pay = pay;
     }
 
     public Customer getCus() {
@@ -56,5 +57,14 @@ public class CustomerOwe {
     public void setPro(Product pro) {
         this.pro = pro;
     }
-    
+
+    public boolean isPay() {
+        return pay;
+    }
+
+    public void setPay(boolean pay) {
+        this.pay = pay;
+    }
+
+   
 }

@@ -14,11 +14,11 @@
         <title>JSP Page</title>
         <link href="../../css/loginCss.css" rel="stylesheet" type="text/css"/>
         <script src="../../js/main.js" type="text/javascript"></script>
-        <%! float tong = 0;  %>
+        <%! float tong = 0;%>
     </head>
     <body class="body-home">
-    
-         <div class="contain-flex"> 
+
+        <div class="contain-flex"> 
             <div class="item-right">
                 <a class="item-flex" href="../../dept/home" ">Home</a>      
             </div>
@@ -26,12 +26,24 @@
                 <a class="item-flex" href="#" onclick="logout()">Log out</a>      
             </div>
         </div>
-        
+
 
         <div class="h1-container">
             <h1 class="h1-content">Chi tiết đơn hàng</h1>
         </div>
+        <div>
+            <div id="mySidebar" class="sidebar">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                <a href="../../dept/home">Khách hàng</a>
+                <a href="../../dept/company">Đối tác</a>
 
+            </div>
+
+            <div id="main">
+                <button class="openbtn" onclick="openNav()">☰ Tùy Chọn</button>  
+
+            </div>
+        </div>
         <div class="table-owe">
             <table border="1" >
                 <div>
@@ -58,13 +70,13 @@
                             <td>${1000*(sd.quantity*sd.pro.price - sd.pro.price*sd.discount)} VND</td>
                         </tr>
                     </div>       
-                    
+
                 </c:forEach>
-                        
-<!--                        <tr>
-                            <td colspan="5">Tổng tiền</td>
-                            <td id="tong"></td>
-                        </tr>-->
+
+                <!--                        <tr>
+                                            <td colspan="5">Tổng tiền</td>
+                                            <td id="tong"></td>
+                                        </tr>-->
                 <tr>
                     <td colspan="6"><div id="pagger"> </div></td>
                 </tr>

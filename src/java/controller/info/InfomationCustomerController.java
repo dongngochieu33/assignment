@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.dept;
+package controller.info;
 
-import dal.CompanyDBContext;
+import dal.CustomersOweDBContext;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.CompanysOwe;
+import model.Customer;
 
 /**
  *
  * @author ADMIN
  */
-public class CompanyController extends HttpServlet {
+public class InfomationCustomerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,10 +31,13 @@ public class CompanyController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CompanyDBContext db = new CompanyDBContext();
-        ArrayList<CompanysOwe> allCompanyOwe = db.getAllCompanyOwe();
-        request.setAttribute("allCompanyOwe", allCompanyOwe);
-        request.getRequestDispatcher("../view/deptManagement/company.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        CustomersOweDBContext db = new CustomersOweDBContext();
+        int id = Integer.parseInt(request.getParameter("id")) ;
+        Customer cusInfo = db.getInfoOfCustomer(id);
+        request.setAttribute("cusInfo", cusInfo);
+        request.getRequestDispatcher("../view/deptManagement/customer/info.jsp").forward(request, response);
+          
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

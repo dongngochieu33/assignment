@@ -3,24 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.info;
+package controller.dept;
 
 import dal.CustomersOweDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.CustomerOwe;
-import model.SaleDetail;
 
 /**
  *
  * @author ADMIN
  */
-public class InfoCustomerDetailController extends HttpServlet {
+public class InfoCustomerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,28 +33,35 @@ public class InfoCustomerDetailController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int saleHistoryId = Integer.parseInt(request.getParameter("saleHistoryId"));
+        String cusName = request.getParameter("cusName");
         String page = request.getParameter("page");
         if (page == null || page.trim().length() == 0) {
             page = "1";
         }
-        int pageindex = Integer.parseInt(page);
-        int pagesize = 10;
-        CustomersOweDBContext db = new CustomersOweDBContext();
-        int records = db.getTotalPageOfCustomerDetail(saleHistoryId);
-        int totalpage = (records % pagesize == 0) ? (records / pagesize) : (records / pagesize) + 1;
-        if (pageindex > totalpage) {
-            pageindex = totalpage;
-        } else if (pageindex <= 0) {
-            pageindex = 1;
+        Date fromDate = null;
+        String date_raw = (String) request.getParameter("fromDate");
+        if (date_raw != null && date_raw.trim().length() != 0) {
+            fromDate = Date.valueOf(date_raw);
         }
-        ArrayList<SaleDetail> saleDetail = db.getSaleDetailById(saleHistoryId, pageindex, pagesize);
-
+        int pageindex = Integer.parseInt(page);
+        int id = Integer.parseInt(request.getParameter("cusId"));
+        CustomersOweDBContext db = new CustomersOweDBContext();
+        int pagesize = 10;
+        int records = db.getTotalPageOfOneCustomerOwe(id,fromDate);
+        int totalpage = (records % pagesize == 0) ? (records / pagesize) : (records / pagesize) + 1;
+        
+        
+        if(pageindex > totalpage) pageindex = totalpage;
+        else if(pageindex <=0 )pageindex = 1;
+        ArrayList<CustomerOwe> oneCustomerOwe = db.getOneCustomerOwe(id, pageindex, pagesize, fromDate);
+        request.setAttribute("cusName", cusName);
+        request.setAttribute("cusId", id);
+        request.setAttribute("fromDate", fromDate);
         request.setAttribute("totalpage", totalpage);
         request.setAttribute("pageindex", pageindex);
-        request.setAttribute("saleHistoryId", saleHistoryId);
-        request.setAttribute("saleDetail", saleDetail);
-        request.getRequestDispatcher("../../view/deptManagement/customer/saleDetail.jsp").forward(request, response);
+        request.setAttribute("oneCustomerOwe", oneCustomerOwe);
+        request.getRequestDispatcher("../view/deptManagement/customer/totalOwe.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -14,17 +14,17 @@ public class Company {
     private String name;
     private String email;
     private String phoneNumber;
-    private String addess;
+    private String address;
 
     public Company() {
     }
 
-    public Company(int id, String name, String email, String phoneNumber, String addess) {
+    public Company(int id, String name, String email, String phoneNumber, String address) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.addess = addess;
+        this.address = address;
     }
 
     public int getId() {
@@ -59,12 +59,12 @@ public class Company {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddess() {
-        return addess;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddess(String addess) {
-        this.addess = addess;
+    public void setAddress(String addess) {
+        this.address = addess;
     }
     
 }

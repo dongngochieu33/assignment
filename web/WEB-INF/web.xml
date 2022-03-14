@@ -18,15 +18,27 @@
     </servlet>
     <servlet>
         <servlet-name>InfoCustomerController</servlet-name>
-        <servlet-class>controller.info.InfoCustomerController</servlet-class>
+        <servlet-class>controller.dept.InfoCustomerController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>InfoCustomerDetailController</servlet-name>
-        <servlet-class>controller.info.InfoCustomerDetailController</servlet-class>
+        <servlet-class>controller.dept.InfoCustomerDetailController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PayOneOrderController</servlet-name>
         <servlet-class>controller.pay.PayOneOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PayManyOrderController</servlet-name>
+        <servlet-class>controller.pay.PayManyOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InfomationCustomerController</servlet-name>
+        <servlet-class>controller.info.InfomationCustomerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InfoCompanyController</servlet-name>
+        <servlet-class>controller.info.InfomationCompanyController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -55,6 +67,18 @@
     <servlet-mapping>
         <servlet-name>PayOneOrderController</servlet-name>
         <url-pattern>/pay/oneorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayManyOrderController</servlet-name>
+        <url-pattern>/pay/manyorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InfomationCustomerController</servlet-name>
+        <url-pattern>/info/infocustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InfoCompanyController</servlet-name>
+        <url-pattern>/info/infocompany</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

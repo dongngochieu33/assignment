@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.dept;
+package controller.info;
 
 import dal.CompanyDBContext;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.CompanysOwe;
+import model.Company;
 
 /**
  *
  * @author ADMIN
  */
-public class CompanyController extends HttpServlet {
+public class InfomationCompanyController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,9 +32,10 @@ public class CompanyController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CompanyDBContext db = new CompanyDBContext();
-        ArrayList<CompanysOwe> allCompanyOwe = db.getAllCompanyOwe();
-        request.setAttribute("allCompanyOwe", allCompanyOwe);
-        request.getRequestDispatcher("../view/deptManagement/company.jsp").forward(request, response);
+        int id = Integer.parseInt(request.getParameter("id"));
+        Company company = db.getCompany(id);
+        request.setAttribute("company", company);
+        request.getRequestDispatcher("../view/deptManagement/company/info.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
