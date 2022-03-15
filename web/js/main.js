@@ -4,6 +4,8 @@ function login(){
 }
 function logout(){
     window.location.href = "../logout";
+} function logout2(){
+    window.location.href = "../../logout";
 } 
  function submitForm() {
              document.getElementById("searchForm").submit();
@@ -68,12 +70,25 @@ function deleteOrder(url,shId,tienPhaiTra,cusId){
                     window.location.href = url +"?shId="+shId+"&tienPhaiTra="+tienPhaiTra+"&cusId="+cusId;
                 }
 }
-function deleteAllOrder(id){
-    var result = confirm("Bạn muốn xóa khách hàng này khỏi danh sách nợ?");
+function deleteAllOrderHistory(id){
+    var result = confirm("Ban chắc chắn đã thanh toán đơn hàng này rồi?");
      if(result){
                     document.getElementById(id).submit();
                 }
 }
+function deleteAllOrder(id){
+     var result = confirm("Ban chắc chắn muốn xóa khách hàng này khỏi danh sách nợ?");
+     if(result){
+                    document.getElementById(id).submit();
+                }
+}
+function deleteAllOrderCompany(id,name){
+     var result = confirm("Bạn chắc chẵn đã thanh toán hết tiền nợ cho công ty " + name +" rồi?");
+     if(result){
+                    document.getElementById(id).submit();
+                }
+}
+
 function openNav() {
   document.getElementById("mySidebar").style.width = "250px";
   document.getElementById("main").style.marginLeft = "250px";
@@ -81,4 +96,38 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidebar").style.width = "0";
   document.getElementById("main").style.marginLeft= "0";
+}
+function paggerTotalCompanyOwe(id,pageindex,totalpage,cid,cname,fromDate){
+    container = document.getElementById(id);
+    var result = '';
+    result += '<div id="pageBox"> Page:<input id="pageindex_input" type="number" value="'+pageindex+'"/> over '+totalpage + '</div>';
+    container.innerHTML = result;
+    
+    // Get the input field
+    var input = document.getElementById("pageindex_input");
+
+    // Execute a function when the user releases a key on the keyboard
+    input.addEventListener("keyup", function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+            window.location.href = 'company?page='+input.value +"&cid="+cid +"&cname="+cname +"&fromDate="+fromDate; 
+      }
+    });
+}
+function paggerTotalDetailCompanyOwe(id,pageindex,totalpage,orderSaleId){
+     container = document.getElementById(id);
+    var result = '';
+    result += '<div id="pageBox"> Page:<input id="pageindex_input" type="number" value="'+pageindex+'"/> over '+totalpage + '</div>';
+    container.innerHTML = result;
+    
+    // Get the input field
+    var input = document.getElementById("pageindex_input");
+
+    // Execute a function when the user releases a key on the keyboard
+    input.addEventListener("keyup", function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+            window.location.href = 'detail?page='+input.value +"&orderSaleId="+orderSaleId; 
+      }
+    });
 }

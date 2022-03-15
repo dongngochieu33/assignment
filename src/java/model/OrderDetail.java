@@ -16,16 +16,28 @@ public class OrderDetail {
    private Product product;
    private int quantity;
    private float discount;
+   private float total;
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
 
     public OrderDetail() {
     }
 
-    public OrderDetail(OrderHistory orderHistory, Product product, int quantity, float discount) {
+    public OrderDetail(OrderHistory orderHistory, Product product, int quantity, float discount, float total) {
         this.orderHistory = orderHistory;
         this.product = product;
         this.quantity = quantity;
         this.discount = discount;
+        this.total = total;
     }
+
+   
 
     public OrderHistory getOrderHistory() {
         return orderHistory;

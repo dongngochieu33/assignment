@@ -23,7 +23,7 @@
                 <a class="item-flex" href="../../dept/home" ">Home</a>      
             </div>
             <div class="item-right">
-                <a class="item-flex" href="#" onclick="logout()">Log out</a>      
+                <a class="item-flex" href="#" onclick="logout2()">Log out</a>      
             </div>
         </div>
 

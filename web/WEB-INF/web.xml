@@ -37,8 +37,24 @@
         <servlet-class>controller.info.InfomationCustomerController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>InfoCompanyController</servlet-name>
+        <servlet-name>InfomationCompanyController</servlet-name>
         <servlet-class>controller.info.InfomationCompanyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InfoCompanyController</servlet-name>
+        <servlet-class>controller.dept.InfoCompanyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InfoCompanyDetailController</servlet-name>
+        <servlet-class>controller.dept.InfoCompanyDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PayOneOrderCompanyController</servlet-name>
+        <servlet-class>controller.pay.PayOneOrderCompanyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PayManyOrderCopanyController</servlet-name>
+        <servlet-class>controller.pay.PayManyOrderCopanyController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -77,8 +93,24 @@
         <url-pattern>/info/infocustomer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>InfoCompanyController</servlet-name>
+        <servlet-name>InfomationCompanyController</servlet-name>
         <url-pattern>/info/infocompany</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InfoCompanyController</servlet-name>
+        <url-pattern>/info/company</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InfoCompanyDetailController</servlet-name>
+        <url-pattern>/info/company/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayOneOrderCompanyController</servlet-name>
+        <url-pattern>/pay/ordercompany</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayManyOrderCopanyController</servlet-name>
+        <url-pattern>/pay/manyordercompany</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

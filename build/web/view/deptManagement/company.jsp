@@ -70,18 +70,18 @@
                                     <td>${aco.oweMoney} k VND </td>
                                     
                                     <td>
-                                        <form action="../info/customer" method="POST">
-                                            <input type="hidden" name="cusId" value=""/>
-                                            <input type="hidden" name="cusName" value=""/>
+                                        <form action="../info/company" method="POST">
+                                            <input type="hidden" name="cid" value="${aco.company.id}"/>
+                                            <input type="hidden" name="cname" value="${aco.company.name}"/>
                                             <input type="submit" value="Chi Tiết" class="buttonHome"/>
                                         </form>
                                     </td>
 
                                     <td>
 
-                                        <form action="../pay/manyorder" method="POST" id="deleteSaleHistory">
-                                            <input type="hidden" value="" name="cid"/>
-                                            <input type="submit" value="Xóa" class="buttonHome" onclick="deleteAllOrder('deleteSaleHistory')"/>
+                                        <form action="../pay/manyordercompany" method="POST" id="CompanyOrder">
+                                            <input type="hidden" value="${aco.company.id}" name="cid"/>
+                                            <input type="button" value="Xóa" class="buttonHome" onclick=" deleteAllOrderCompany('CompanyOrder','${aco.company.name}')"/>
                                         </form>
                                     </td>
                                 </tr>

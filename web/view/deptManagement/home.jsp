@@ -100,7 +100,7 @@
 
                                         <form action="../pay/manyorder" method="POST" id="deleteSaleHistory">
                                             <input type="hidden" value="${aco.cus.cid}" name="cid"/>
-                                            <input type="submit" value="Xóa" class="buttonHome" onclick="deleteAllOrder('deleteSaleHistory')"/>
+                                            <input type="button" value="Xóa" class="buttonHome" onclick="deleteAllOrder('deleteSaleHistory')"/>
                                         </form>
                                     </td>
                                 </tr>
