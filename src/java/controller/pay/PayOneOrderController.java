@@ -5,6 +5,7 @@
  */
 package controller.pay;
 
+import controller.auth.BaseAuthController;
 import dal.CustomersOweDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class PayOneOrderController extends HttpServlet {
+public class PayOneOrderController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,11 +33,12 @@ public class PayOneOrderController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int shId = Integer.parseInt(request.getParameter("shId"));
+        String cusName = request.getParameter("cusName");
         float tienPhaiTra = Float.parseFloat(request.getParameter("tienPhaiTra")) ;
         int cusId = Integer.parseInt(request.getParameter("cusId"));
         CustomersOweDBContext db = new CustomersOweDBContext();
         db.payOrder(shId,tienPhaiTra);
-        response.sendRedirect("../info/customer?cusId="+cusId);
+        response.sendRedirect("../info/customer?cusId="+cusId+"&cusName="+cusName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,7 +51,7 @@ public class PayOneOrderController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -63,7 +65,7 @@ public class PayOneOrderController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

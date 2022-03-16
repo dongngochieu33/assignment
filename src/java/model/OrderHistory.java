@@ -15,11 +15,14 @@ public class OrderHistory {
     private int id;
     private Date orderDate;
     private Date maturityDate;
-    private double paid;
+    private float paid;
     private Company company;
-    private double total;
+    private float total;
 
-    public OrderHistory(int id, Date orderDate, Date maturityDate, double paid, Company company, double total) {
+    public OrderHistory() {
+    }
+
+    public OrderHistory(int id, Date orderDate, Date maturityDate, float paid, Company company, float total) {
         this.id = id;
         this.orderDate = orderDate;
         this.maturityDate = maturityDate;
@@ -27,10 +30,6 @@ public class OrderHistory {
         this.company = company;
         this.total = total;
     }
-
-    public OrderHistory() {
-    }
-
 
     public int getId() {
         return id;
@@ -56,11 +55,11 @@ public class OrderHistory {
         this.maturityDate = maturityDate;
     }
 
-    public double getPaid() {
+    public float getPaid() {
         return paid;
     }
 
-    public void setPaid(double paid) {
+    public void setPaid(float paid) {
         this.paid = paid;
     }
 
@@ -72,13 +71,17 @@ public class OrderHistory {
         this.company = company;
     }
 
-    public double getTotal() {
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(float total) {
         this.total = total;
     }
+
+    
+    
+    
     
   
 

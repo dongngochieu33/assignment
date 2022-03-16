@@ -22,10 +22,10 @@
     <body class="body-home">
         <div class="contain-flex"> 
             <div class="item-right">
-                <a class="item-flex" href="../dept/home" ">Home</a>      
+                <a class="item-flex" href="../dept/home" ">Trang chủ</a>      
             </div>
             <div class="item-right">
-                <a class="item-flex" href="#" onclick="logout()">Log out</a>      
+                <a class="item-flex" href="#" onclick="logout()">Đăng xuất</a>      
             </div>
         </div>
         <div class="h1-container"><h1 class="h1-content">Danh sách khách hàng nợ tiền</h1></div>
@@ -45,7 +45,7 @@
             </div>
            
                 <div class="formDate">
-                    <div class="formDate-content">
+                    <div class="formDate-content-cus">
                         <%! float tong = 0;%>
                         <%for (CustomersOwe c : (ArrayList<CustomersOwe>) request.getAttribute("allCustomersOwe")) {
                                 tong += c.getOwnMoney();
@@ -98,9 +98,10 @@
 
                                     <td>
 
-                                        <form action="../pay/manyorder" method="POST" id="deleteSaleHistory">
+                                        <form action="../pay/manyorder" method="POST" id="deleteSaleHistory${aco.cus.cid}">
                                             <input type="hidden" value="${aco.cus.cid}" name="cid"/>
-                                            <input type="button" value="Xóa" class="buttonHome" onclick="deleteAllOrder('deleteSaleHistory')"/>
+                                            <input type="hidden" value="${requestScope.addressid}" name="addressid"/>
+                                            <input type="button" value="Xóa" class="buttonHome" onclick="deleteAllOrder('deleteSaleHistory${aco.cus.cid}')"/>
                                         </form>
                                     </td>
                                 </tr>

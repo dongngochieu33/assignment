@@ -5,6 +5,7 @@
  */
 package controller.dept;
 
+import controller.auth.BaseAuthController;
 import dal.CustomersOweDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +21,7 @@ import model.CustomerOwe;
  *
  * @author ADMIN
  */
-public class InfoCustomerController extends HttpServlet {
+public class InfoCustomerController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -74,7 +75,7 @@ public class InfoCustomerController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -88,7 +89,7 @@ public class InfoCustomerController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

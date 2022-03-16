@@ -37,7 +37,7 @@ public class CompanyDBContext extends DBContext {
                     + "JOIN dbo.Product ON Product.id = OrderDetail.productId\n"
                     + "JOIN dbo.Company ON Company.id = OrderHistory.companyId\n"
                     + "GROUP BY OrderHistory.id,companyName,OrderHistory.companyId \n"
-                    + "HAVING SUM(cost * quantity * (1-discount) ) - AVG(paid) > 0\n"
+                    + "HAVING SUM(cost * quantity * (1-discount) )-1 - AVG(paid) > 0\n"
                     + ") \n"
                     + "SELECT a.idc,a.companyName,SUM(a.tienno) AS 'tongno'  FROM a \n"
                     + "GROUP BY a.companyName,a.idc\n"
@@ -104,7 +104,7 @@ public class CompanyDBContext extends DBContext {
                 sql += " AND orderDate >= ?";
             }
             sql += " GROUP BY orderDate,maturityDate,OrderHistory.id,companyName\n"
-                    + "HAVING SUM(cost * quantity * (1-discount)) - AVG(paid) > 0)\n"
+                    + "HAVING SUM(cost * quantity * (1-discount))-1 - AVG(paid) > 0)\n"
                     + "SELECT * FROM k\n"
                     + "WHERE k.row > (?-1)*? AND k.row <= ? * ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -154,7 +154,7 @@ public class CompanyDBContext extends DBContext {
                 sql += " AND orderDate >= ?";
             }
             sql += " GROUP BY orderDate,maturityDate,OrderHistory.id,companyName\n"
-                    + "HAVING SUM(cost * quantity * (1-discount)) - AVG(paid) > 0)\n"
+                    + "HAVING SUM(cost * quantity * (1-discount))-1 - AVG(paid) > 0)\n"
                     + "SELECT COUNT(*) AS allrow FROM k";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
@@ -295,7 +295,7 @@ public class CompanyDBContext extends DBContext {
                     + "                   JOIN dbo.Company ON Company.id = OrderHistory.companyId\n"
                     + "                   WHERE Company.id = ?\n"
                     + "				   GROUP BY orderDate,maturityDate,OrderHistory.id,companyName\n"
-                    + "                   HAVING SUM(cost * quantity * (1-discount)) - AVG(paid) > 0)\n"
+                    + "                   HAVING SUM(cost * quantity * (1-discount))-1 - AVG(paid) > 0)\n"
                     + "                   SELECT k.id,k.total FROM k";
 
             PreparedStatement stm = connection.prepareStatement(sql);

@@ -20,10 +20,10 @@
     <body class="body-home">
         <div class="contain-flex"> 
             <div class="item-right">
-                <a class="item-flex" href="../dept/company" ">Home</a>      
+                <a class="item-flex" href="../dept/company" ">Trang chủ</a>      
             </div>
             <div class="item-right">
-                <a class="item-flex" href="#" onclick="logout()">Log out</a>      
+                <a class="item-flex" href="#" onclick="logout()">Đăng xuất</a>      
             </div>
         </div>
         <div class="h1-container"><h1 class="h1-content">Danh sách đối tác đang thiếu nợ</h1></div>
@@ -42,7 +42,7 @@
                 </div>
             </div>
         <div class="formDate">
-                    <div class="formDate-content">
+                    <div class="formDate-content-cus">
                         <%! double tong = 0;%>
                         <%for (CompanysOwe c : (ArrayList<CompanysOwe>) request.getAttribute("allCompanyOwe")) {
                                 tong += c.getOweMoney();
@@ -79,9 +79,9 @@
 
                                     <td>
 
-                                        <form action="../pay/manyordercompany" method="POST" id="CompanyOrder">
+                                        <form action="../pay/manyordercompany" method="POST" id="CompanyOrder${aco.company.id}">
                                             <input type="hidden" value="${aco.company.id}" name="cid"/>
-                                            <input type="button" value="Xóa" class="buttonHome" onclick=" deleteAllOrderCompany('CompanyOrder','${aco.company.name}')"/>
+                                            <input type="button" value="Xóa" class="buttonHome" onclick=" deleteAllOrderCompany('CompanyOrder${aco.company.id}','${aco.company.name}')"/>
                                         </form>
                                     </td>
                                 </tr>

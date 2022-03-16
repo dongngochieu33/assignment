@@ -20,10 +20,10 @@
     <body class="body-home">
         <div class="contain-flex"> 
             <div class="item-right">
-                <a class="item-flex" href="../dept/company" ">Home</a>      
+                <a class="item-flex" href="../dept/company" ">Trang chủ</a>      
             </div>
             <div class="item-right">
-                <a class="item-flex" href="#" onclick="logout()">Log out</a>      
+                <a class="item-flex" href="#" onclick="logout()">Đăng xuất</a>      
             </div>
         </div>
         <div class="h1-container"><h1 class="h1-content">Danh sách đối tác đang thiếu nợ</h1></div>
@@ -35,7 +35,12 @@
                     <a href="../dept/company">Đối tác</a>
 
                 </div>
-
+                <div id="main">
+                <form action="../dept/company">
+                    <input type="hidden"/>
+                    <input type="submit" value="Trang trước"/>
+                </form>
+            </div>
                 <div id="main">
                     <button class="openbtn" onclick="openNav()">☰ Tùy Chọn</button>  
                     

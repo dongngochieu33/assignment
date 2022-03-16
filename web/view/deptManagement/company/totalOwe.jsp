@@ -22,10 +22,10 @@
 
         <div class="contain-flex"> 
             <div class="item-right">
-                <a class="item-flex" href="../dept/company" ">Home</a>      
+                <a class="item-flex" href="../dept/company" ">Trang chủ</a>      
             </div>
             <div class="item-right">
-                <a class="item-flex" href="#" onclick="logout()">Log out</a>      
+                <a class="item-flex" href="#" onclick="logout()">Đăng xuất</a>      
             </div>
         </div>
         <div class="h1-container"><h1 class="h1-content">Danh đơn hành chưa thanh toán với công ty: ${requestScope.cname}</h1></div>
@@ -37,14 +37,24 @@
                 <a href="../dept/company">Đối tác</a>
 
             </div>
-
+            <div id="main">
+                <form action="../dept/company">
+                    <input type="hidden"/>
+                    <input type="submit" value="Trang trước"/>
+                </form>
+            </div>
             <div id="main">
                 <button class="openbtn" onclick="openNav()">☰ Tùy Chọn</button>  
 
             </div>
+            
         </div>
+        
         <div class="formDate">
-
+            <form action="../company/add" method="GET" class="form-create">
+            <input type="hidden" name="cid" value="${requestScope.cid}"/>
+            <input type="submit" value="Thêm bản ghi"/>
+        </form>
             <div class="formDate-content">
                 <form action="company"  method="POST">
                     <input type="hidden" value="${requestScope.cid}" name="cid" />
@@ -88,6 +98,7 @@
 
                             <td>
                                 <form action="company/detail" method="POST">
+                                     <input type="hidden" value="${requestScope.cid}" name="cid" />
                                     <input type="hidden" value="${co.id}" name="orderSaleId"/>
                                     <input type="submit" value="Chi Tiết" class="buttonHome"/>
                                 </form>
@@ -95,11 +106,12 @@
 
                             <td>
 
-                                <form action="../pay/ordercompany" method="POST" id="deleteOrderHistory">
+                                <form action="../pay/ordercompany" method="POST" id="deleteOrderHistory${co.id}">
                                     <input type="hidden" value="${requestScope.cid}" name="cid" />
+                                    <input type="hidden" value="${requestScope.cname}" name="cname" />
                                     <input type="hidden" value="${co.id}" name="orderSaleId"/>
                                      <input type="hidden" value="${co.total}" name="total"/>
-                                     <input type="button" value="Xóa" class="buttonHome" onclick="deleteAllOrderHistory('deleteOrderHistory')"/>
+                                     <input type="button" value="Xóa" class="buttonHome" onclick="deleteAllOrderHistory('deleteOrderHistory${co.id}')"/>
                                 </form>
                             </td>
                         </tr>

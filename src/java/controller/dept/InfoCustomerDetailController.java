@@ -5,6 +5,7 @@
  */
 package controller.dept;
 
+import controller.auth.BaseAuthController;
 import dal.CustomersOweDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +21,7 @@ import model.SaleDetail;
  *
  * @author ADMIN
  */
-public class InfoCustomerDetailController extends HttpServlet {
+public class InfoCustomerDetailController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,6 +35,8 @@ public class InfoCustomerDetailController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int saleHistoryId = Integer.parseInt(request.getParameter("saleHistoryId"));
+        String cusName = request.getParameter("cusName");
+        int id = Integer.parseInt(request.getParameter("cusId"));
         String page = request.getParameter("page");
         if (page == null || page.trim().length() == 0) {
             page = "1";
@@ -49,7 +52,8 @@ public class InfoCustomerDetailController extends HttpServlet {
             pageindex = 1;
         }
         ArrayList<SaleDetail> saleDetail = db.getSaleDetailById(saleHistoryId, pageindex, pagesize);
-
+        request.setAttribute("cusName", cusName);
+        request.setAttribute("cusId", id);
         request.setAttribute("totalpage", totalpage);
         request.setAttribute("pageindex", pageindex);
         request.setAttribute("saleHistoryId", saleHistoryId);
@@ -67,7 +71,7 @@ public class InfoCustomerDetailController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -81,7 +85,7 @@ public class InfoCustomerDetailController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

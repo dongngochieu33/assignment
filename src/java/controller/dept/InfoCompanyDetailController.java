@@ -5,6 +5,7 @@
  */
 package controller.dept;
 
+import controller.auth.BaseAuthController;
 import dal.CompanyDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +20,7 @@ import model.OrderDetail;
  *
  * @author ADMIN
  */
-public class InfoCompanyDetailController extends HttpServlet {
+public class InfoCompanyDetailController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,6 +34,7 @@ public class InfoCompanyDetailController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("orderSaleId"));
+        int cid = Integer.parseInt(request.getParameter("cid"));
         String page = request.getParameter("page");
         if (page == null || page.trim().length() == 0) {
             page = "1";
@@ -49,6 +51,7 @@ public class InfoCompanyDetailController extends HttpServlet {
         }
         ArrayList<OrderDetail> orderDetail = db.getOrderDetailById(id, pageindex, pagesize);
         request.setAttribute("orderSaleId", id);
+        request.setAttribute("cid", cid);
         request.setAttribute("totalpage", totalpage);
         request.setAttribute("pageindex", pageindex);
         request.setAttribute("orderSaleId", id);
@@ -66,7 +69,7 @@ public class InfoCompanyDetailController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -80,7 +83,7 @@ public class InfoCompanyDetailController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

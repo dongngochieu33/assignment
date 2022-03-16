@@ -18,10 +18,10 @@
     <body class="body-home">
         <div class="contain-flex"> 
             <div class="item-right">
-                <a class="item-flex" href="../dept/home" ">Home</a>      
+                <a class="item-flex" href="../dept/home" >Trang chủ</a>      
             </div>
             <div class="item-right">
-                <a class="item-flex" href="#" onclick="logout()">Log out</a>      
+                <a class="item-flex" href="#" onclick="logout()">Đăng xuất</a>      
             </div>
         </div>
 
@@ -34,16 +34,20 @@
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
                     <a href="../dept/home">Khách hàng</a>
                     <a href="../dept/company">Đối tác</a>
-
                 </div>
-
+                <div id="main">
+                <form action="../dept/home">
+                    <input type="hidden"/>
+                    <input type="submit" value="Trang trước"/>
+                </form>
+            </div>
                 <div id="main">
                     <button class="openbtn" onclick="openNav()">☰ Tùy Chọn</button>  
                     
                 </div>
             </div>
         <div class="formDate">
-            <div class="formDate-content">
+            <div class="formDate-content-cus">
                 <form action="customer"  method="POST">
                     <input type="hidden" value="${requestScope.cusId}" name="cusId" />
                     <input type="hidden" name="cusName" value="${requestScope.cusName}"/>
@@ -86,12 +90,14 @@
                             <td>
                                 <form action="customer/detail" method="POST">
                                     <input type="hidden" name="saleHistoryId" value="${aco.saleHistory.shId}"/>
+                                       <input type="hidden" name="cusName" value="${requestScope.cusName}"/>
+                                          <input type="hidden" name="cusId" value="${requestScope.cusId}"/>
                                     <input type="submit" value="Chi Tiết" class="buttonHome"/>
                                 </form>
                             </td>
 
                             <td>
-                                <button onclick="deleteOrder('../pay/oneorder',${aco.saleHistory.shId},${aco.saleHistory.total},${requestScope.cusId})" class="buttonHome">Xoa</button>
+                                <button onclick="deleteOrder('../pay/oneorder',${aco.saleHistory.shId},${aco.saleHistory.total},${requestScope.cusId},'${requestScope.cusName}')" class="buttonHome">Xoa</button>
 
                             </td>
 

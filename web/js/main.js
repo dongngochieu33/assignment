@@ -2,6 +2,9 @@ function login(){
     document.getElementById("form-container").style.display = "block";
 
 }
+function logoutdenied(){
+    window.location.href = "logout";
+} 
 function logout(){
     window.location.href = "../logout";
 } function logout2(){
@@ -64,10 +67,10 @@ function logout(){
       }
     });
 }
-function deleteOrder(url,shId,tienPhaiTra,cusId){
+function deleteOrder(url,shId,tienPhaiTra,cusId,cusName){
     var result = confirm("Bạn muốn xóa đơn hàng này khỏi danh sách nợ?");
      if(result){
-                    window.location.href = url +"?shId="+shId+"&tienPhaiTra="+tienPhaiTra+"&cusId="+cusId;
+                    window.location.href = url +"?shId="+shId+"&tienPhaiTra="+tienPhaiTra+"&cusId="+cusId+"&cusName="+cusName;
                 }
 }
 function deleteAllOrderHistory(id){
@@ -76,7 +79,8 @@ function deleteAllOrderHistory(id){
                     document.getElementById(id).submit();
                 }
 }
-function deleteAllOrder(id){
+function deleteAllOrder(id,cid){
+    console.log(cid);
      var result = confirm("Ban chắc chắn muốn xóa khách hàng này khỏi danh sách nợ?");
      if(result){
                     document.getElementById(id).submit();

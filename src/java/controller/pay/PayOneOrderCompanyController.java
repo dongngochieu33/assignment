@@ -5,6 +5,7 @@
  */
 package controller.pay;
 
+import controller.auth.BaseAuthController;
 import dal.CompanyDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class PayOneOrderCompanyController extends HttpServlet {
+public class PayOneOrderCompanyController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,9 +34,10 @@ public class PayOneOrderCompanyController extends HttpServlet {
         int orderSaleId =  Integer.parseInt( request.getParameter("orderSaleId"));
         float toatl = Float.parseFloat(request.getParameter("total"));
         int cid = Integer.parseInt(request.getParameter("cid"));
+        String cname = request.getParameter("cname");
         CompanyDBContext db = new CompanyDBContext();
         db.payOneOrder(orderSaleId,toatl);
-        response.sendRedirect("../info/company?cid="+cid);
+        response.sendRedirect("../info/company?cid="+cid+"&cname="+cname);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,7 +50,7 @@ public class PayOneOrderCompanyController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -62,7 +64,7 @@ public class PayOneOrderCompanyController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

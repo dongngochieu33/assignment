@@ -22,7 +22,7 @@
                 <a class="item-flex" href="#" onclick="login()">Đăng nhập</a>      
             </div>
         </div>
-         <div id="slogan"><h1>Tra Tien Day</h1></div>
+         <div id="slogan"><h1>Sổ Nợ</h1></div>
     <c:if test="${requestScope.loginFailed != null}">
         <script>
             login();

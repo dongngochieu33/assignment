@@ -5,6 +5,7 @@
  */
 package controller.pay;
 
+import controller.auth.BaseAuthController;
 import dal.CompanyDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +20,7 @@ import model.OrderHistory;
  *
  * @author ADMIN
  */
-public class PayManyOrderCopanyController extends HttpServlet {
+public class PayManyOrderCopanyController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,7 +50,7 @@ public class PayManyOrderCopanyController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -63,7 +64,7 @@ public class PayManyOrderCopanyController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

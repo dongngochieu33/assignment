@@ -33,11 +33,13 @@ public class PayManyOrderController extends BaseAuthController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int addressid = Integer.parseInt(request.getParameter("addressid"));
         int id = Integer.parseInt(request.getParameter("cid")); 
         CustomersOweDBContext db = new CustomersOweDBContext();
         ArrayList<CustomerOwe> allCustomerOwe = db.getAllCustomerOwe(id);
         db.deleteSaleHistory(allCustomerOwe);
-        response.sendRedirect("../dept/home");
+       
+        response.sendRedirect("../dept/home?addressid="+addressid);
        //response.getWriter().print("done");
     }
 
